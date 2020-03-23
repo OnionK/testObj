@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background: #ccc;
+        }
+
+        canvas {
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="text-align: center">
+        <canvas height="600" width="900" id="canvas">
+        </canvas>
+    </div>
+    <script>
+
+        window.onload = function () {
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            ctx.lineWidth = 6.0;
+            canvas.addEventListener('touchstart', function (event) {
+                if (event.targetTouches.length == 1) {
+                    var touch = event.targetTouches[0];
+                    ctx.beginPath();
+                    ctx.moveTo(touch.clientX - canvas.offsetLeft, touch.clientY - canvas.offsetTop);
+                    canvas.addEventListener('touchmove', function (event) {
+                        var touche = event.targetTouches[0];
+                        ctx.lineTo(touche.clientX - canvas.offsetLeft, touche.clientY - canvas.offsetTop);
+                        ctx.stroke();
+                    }, false)
+                    canvas.addEventListener('touchend', function (event) {
+                        ctx.closePath();
+                    }, false)
+                }
+            }, false)
+
+        }
+    </script>
+</body>
+
+</html>
